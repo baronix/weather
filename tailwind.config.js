@@ -8,9 +8,11 @@ module.exports = {
       backgroundImage: {
         'cold' : "url('./assets/cold.webp')",
         'hot' : "url('./assets/hot.webp')",
-      }
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  ],
 }
 
