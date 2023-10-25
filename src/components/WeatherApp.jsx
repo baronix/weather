@@ -59,18 +59,19 @@ const WeatherApp = () => {
                         
                     </div>
                     
-                    <div className="flex flex-col justify-center items-center mt-3">
+                    <div className="flex flex-col justify-center items-center mb-5">
+                        
+                        <div>
+                            {weather.current ? <img src={`https://cdn.weatherapi.com/weather/128x128/${weather.current.condition.icon.split('/')[5]}/${weather.current.condition.icon.split('/')[6]}`} alt="" className='' /> : null} 
+                        </div>
                         <div className=''>
                             {weather.current ? <p className='font-mono'>{weather.current.condition.text}</p> : null}
-                        </div>
-                        <div>
-                            {weather.current ? <img src={weather.current.condition.icon} alt="" className='' /> : null} 
                         </div>
                         
                     </div>
                     
                 </div>
-                <div className='flex flex-row mt-4'>
+                <div className='flex flex-row'>
                     <div className='flex flex-col items-center justify-center mr-4'>
                         <div className='flex flex-col items-center justify-center mr-4'>
                             
