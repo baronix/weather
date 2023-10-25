@@ -51,7 +51,7 @@ const WeatherApp = () => {
                 </div>
                 <div className='top'>
                 <div className="flex flex-col items-center justify-center mt-3">
-                        {weather.location ? <p className='font-bold text-2xl font-mono animate-fade-up'>{weather.location.name}, {weather.location.country}</p> : <p className='w-[50%] text-center text-sm font-mono'>Pesquise por país ou cidade, para locais estrangeiros pesquisar em inglês.</p>}
+                        {weather.location ? <p className='font-bold text-2xl font-mono animate-fade-up'>{weather.location.name}, {weather.location.country}</p> : <p className='w-[50%] text-center text-sm font-mono'>Pesquise por país ou cidade, para locais estrangeiros pesquise em inglês.</p>}
                         {weather.location ? <p className='text-sm italic font-mono animate-fade-up'>{weather.location.localtime}</p> : null}
                     </div>
                     <div className='flex flex-col items-center mt-3'>
