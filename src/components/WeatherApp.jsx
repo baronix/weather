@@ -34,9 +34,9 @@ const WeatherApp = () => {
 
   return (
     <div className={weather.current ? (weather.current.temp_c>25 ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-500 to-yellow-300 h-screen flex items-center justify-center" : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100 via-blue-300 to-blue-500 h-[100vh] flex items-center justify-center overflow-auto ") : "h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 to-gray-600 bg-gradient-to-r"}>
-        <div className='bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-100 to-teal-100 w-[500px] max-w[1240px] m-auto rounded-[25px] bg-opacity-70 text-black pt-10 pb-10 shadow-[rgba(0,_0,_0,_0.2)_0px_60px_40px_-7px] overflow-y-auto animate-fade'>
+        <div className='bg-white w-[500px] max-w[1240px] m-auto rounded-[25px] bg-opacity-60 text-black pt-10 pb-10 shadow-[rgba(0,_0,_0,_0.2)_0px_60px_40px_-7px] overflow-y-auto animate-fade'>
             <div className='flex flex-col items-center justify-center ease-in-out'>
-                <img src={logoImg} alt="" className='max-w-[250px] pb-5 animate-fade animate-delay-200'/>
+                <img src={logoImg} alt="" className='max-w-[150px] pb-5 animate-fade animate-delay-200'/>
                 <div className="relative mb-3">
                     <input 
                     type="text" 
@@ -44,14 +44,14 @@ const WeatherApp = () => {
                     value={location} 
                     onChange={event => setLocation(event.target.value)}
                     onKeyPress={searchLocation}
-                    placeholder='Pesquisar cidade'
+                    placeholder='Pesquisar'
                     className='border-2 font-mono border-gray-300 bg-white h-10  rounded-lg text-sm text-center focus:outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)] animate-fade animate-delay-200'
                     />
 
                 </div>
                 <div className='top'>
                 <div className="flex flex-col items-center justify-center mt-3">
-                        {weather.location ? <p className='font-bold text-2xl font-mono animate-fade-up'>{weather.location.name}, {weather.location.country}</p> : null}
+                        {weather.location ? <p className='font-bold text-2xl font-mono animate-fade-up'>{weather.location.name}, {weather.location.country}</p> : <p className='w-[50%] text-center text-sm font-mono'>Pesquise por país ou cidade, para locais estrangeiros pesquisar em inglês.</p>}
                         {weather.location ? <p className='text-sm italic font-mono animate-fade-up'>{weather.location.localtime}</p> : null}
                     </div>
                     <div className='flex flex-col items-center mt-3'>
