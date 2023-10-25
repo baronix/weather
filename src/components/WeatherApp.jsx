@@ -33,7 +33,7 @@ const WeatherApp = () => {
 
 
   return (
-    <div className={weather.current ? (weather.current.temp_c>25 ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-500 to-yellow-300 h-screen flex items-center justify-center overflow-auto" : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100 via-blue-300 to-blue-500 h-[100vh] flex items-center justify-center overflow-auto ") : "h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 to-gray-600 bg-gradient-to-r"}>
+    <div className={weather.current ? (weather.current.temp_c>25 ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-500 to-yellow-300 h-screen flex items-center justify-center overflow-auto" : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100 via-blue-300 to-blue-500 h-[100vh] flex items-center justify-center overflow-auto ") : "h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-200 via-gray-400 to-gray-600 overflow-auto"}>
         <div className='bg-white w-[500px] max-w[1240px] m-auto rounded-[25px] bg-opacity-60 text-black pt-10 pb-10 shadow-[rgba(0,_0,_0,_0.2)_0px_60px_40px_-7px] overflow-y-auto animate-fade'>
             <div className='flex flex-col items-center justify-center ease-in-out'>
                 <img src={logoImg} alt="" className='max-w-[150px] pb-5 animate-fade animate-delay-200'/>
@@ -50,7 +50,7 @@ const WeatherApp = () => {
 
                 </div>
                 <div className='top'>
-                <div className="flex flex-col items-center justify-center mt-3">
+                <div className="flex flex-col items-center justify-center mt-3 ">
                         {weather.location ? <p className='font-bold text-2xl font-mono animate-fade-up'>{weather.location.name}, {weather.location.country}</p> : <p className='w-[50%] text-center text-sm font-mono'>Pesquise por país ou cidade, para locais estrangeiros pesquise em inglês.</p>}
                         {weather.location ? <p className='text-sm italic font-mono animate-fade-up'>{weather.location.localtime}</p> : null}
                     </div>
@@ -59,9 +59,9 @@ const WeatherApp = () => {
                         
                     </div>
                     
-                    <div className="flex flex-col justify-center items-center mb-5">
+                    <div className="flex flex-col justify-center items-center ">
                         
-                        <div>
+                        <div >
                             {weather.current ? <img src={`https://cdn.weatherapi.com/weather/128x128/${weather.current.condition.icon.split('/')[5]}/${weather.current.condition.icon.split('/')[6]}`} alt="" className='animate-wiggle animate-infinite animate-duration-[3000ms] animate-ease-linear' /> : null} 
                         </div>
                         <div className=''>
@@ -71,9 +71,9 @@ const WeatherApp = () => {
                     </div>
                     
                 </div>
-                <div className='flex flex-row'>
-                    <div className='flex flex-col items-center justify-center mr-4'>
-                        <div className='flex flex-col items-center justify-center mr-4'>
+                <div className='flex flex-row divide-x-4 divide-dotted divide-black pt-10'>
+                    <div className='flex flex-col items-center justify-center'>
+                        <div className='flex flex-col items-center justify-center mr-5'>
                             
                             {weather.current ? <p className='text-2xl font-mono font-bold animate-fade-up'>{Math.floor(weather.current.humidity)} <span className='text-sm'>%</span></p> : null }  
                             {weather.current ? <p className='text-sm font-mono animate-flip-down animate-delay-200'>Humidade </p> : null }  
@@ -81,7 +81,7 @@ const WeatherApp = () => {
                         </div>              
                     </div>
                     <div className='flex flex-col items-center justify-center'>
-                        <div className='flex flex-col items-center justify-center'>
+                        <div className='flex flex-col items-center justify-center ml-5'>
                             
                             {weather.current ? <p className='text-2xl font-mono font-bold animate-fade-up'>{Math.floor(weather.current.wind_kph)} <span className='text-sm'>KM/h</span></p> : null } 
                             {weather.current ? <p className='text-sm font-mono animate-flip-down animate-delay-200'>Vento</p> : null } 
