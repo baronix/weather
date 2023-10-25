@@ -32,7 +32,7 @@ const WeatherApp = () => {
 
 
   return (
-    <div className={weather.current ? (weather.current.temp_c>25 ? "bg-hot" : "bg-cold") : null}>
+    <div className={weather.current ? (weather.current.temp_c>25 ? "bg-[#FAC898]" : "bg-[#D8E9EC]") : null}>
         <div className='bg-white max-w-[500px] mx-auto rounded-[25px] bg-opacity-70 shadow-md text-black'>
             <div className='flex flex-col h-screen items-center justify-center'>
                 <img src={logoImg} alt="" className='max-w-[250px] pb-5'/>
