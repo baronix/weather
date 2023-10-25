@@ -79,8 +79,8 @@ const WeatherApp = () => {
                     <div className='flex flex-col items-center justify-center'>
                         <div className='flex flex-col items-center justify-center'>
                             
-                            {weather.current ? <p className='text-2xl font-mono'>{weather.current.wind_kph} KM/h</p> : null } 
-                            {weather.current ? <p className='text-sm font-mono'>Vento</p> : null } 
+                            {weather.current ? <p className='text-2xl font-mono'>{weather.current.wind_kph}</p> : null } 
+                            {weather.current ? <p className='text-sm font-mono'>Vento KM/h</p> : null } 
                             {weather.current ? <BiWind size={20}/> : null }          
                         </div>
                     </div>
