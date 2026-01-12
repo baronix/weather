@@ -1,4 +1,4 @@
-// tipos pra importar imagens
+// tipos para importar imagens
 declare module '*.webp' {
   const content: string;
   export default content;

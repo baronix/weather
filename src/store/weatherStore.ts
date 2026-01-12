@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { WeatherData } from '@/types';
 
-// tipos pro store
+// tipos para o store
 export type TemperatureUnit = 'celsius' | 'fahrenheit';
 export type Theme = 'light' | 'dark' | 'auto';
 export type Language = 'pt' | 'en';
@@ -22,20 +22,20 @@ interface WeatherState {
   error: string | null;
   lastUpdated: number | null;
   
-  // localizacao atual
+  // localização atual
   currentLocation: string | null;
   
   // favoritos
   favorites: FavoriteLocation[];
   
-  // configuracoes
+  // definições
   unit: TemperatureUnit;
   theme: Theme;
   language: Language;
   autoRefresh: boolean;
   refreshInterval: number; // em minutos
   
-  // acoes
+  // ações
   setWeather: (weather: WeatherData | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -70,7 +70,7 @@ export const useWeatherStore = create<WeatherState>()(
       autoRefresh: true,
       refreshInterval: 30,
       
-      // acoes de dados
+      // ações de dados
       setWeather: (weather) => set({ 
         weather, 
         lastUpdated: Date.now(),
@@ -80,7 +80,7 @@ export const useWeatherStore = create<WeatherState>()(
       setError: (error) => set({ error, loading: false }),
       setCurrentLocation: (location) => set({ currentLocation: location }),
       
-      // acoes de favoritos
+      // ações de favoritos
       addFavorite: (location) => set((state) => ({
         favorites: [...state.favorites, location]
       })),
@@ -92,7 +92,7 @@ export const useWeatherStore = create<WeatherState>()(
         return state.favorites.some((f) => f.name.toLowerCase() === name.toLowerCase());
       },
       
-      // acoes de configuracao
+      // ações de definições
       setUnit: (unit) => set({ unit }),
       setTheme: (theme) => set({ theme }),
       setLanguage: (language) => set({ language }),

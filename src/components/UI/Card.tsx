@@ -1,3 +1,5 @@
+import { useThemeColors } from '@/hooks';
+
 interface CardProps {
   children: React.ReactNode;
   className?: string;
@@ -5,9 +7,11 @@ interface CardProps {
 }
 
 export function Card({ children, className = '', onClick }: CardProps) {
+  const { bgCard, border, bgCardHover } = useThemeColors();
+  
   return (
     <div 
-      className={`bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 ${className} ${onClick ? 'cursor-pointer hover:bg-white/20 transition-all' : ''}`}
+      className={`${bgCard} backdrop-blur-md rounded-2xl ${border} border ${className} ${onClick ? `cursor-pointer ${bgCardHover} transition-all` : ''}`}
       onClick={onClick}
     >
       {children}

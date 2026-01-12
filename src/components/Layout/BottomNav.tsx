@@ -3,23 +3,34 @@ import { FiHome, FiCalendar, FiClock, FiHeart, FiSettings } from 'react-icons/fi
 import { useWeatherStore } from '@/store';
 
 const navItems = [
-  { to: '/', icon: FiHome, label: 'Inicio' },
-  { to: '/forecast', icon: FiCalendar, label: 'Previsao' },
-  { to: '/hourly', icon: FiClock, label: 'Horario' },
+  { to: '/', icon: FiHome, label: 'Início' },
+  { to: '/forecast', icon: FiCalendar, label: 'Previsão' },
+  { to: '/hourly', icon: FiClock, label: 'Horário' },
   { to: '/favorites', icon: FiHeart, label: 'Favoritos' },
-  { to: '/settings', icon: FiSettings, label: 'Config' },
+  { to: '/settings', icon: FiSettings, label: 'Config.' },
 ];
 
-export function BottomNav() {
+interface BottomNavProps {
+  isLightTheme?: boolean;
+}
+
+export function BottomNav({ isLightTheme = false }: BottomNavProps) {
   const weather = useWeatherStore((s) => s.weather);
   const hasData = !!weather;
 
+  const textColor = isLightTheme ? 'text-slate-800' : 'text-white';
+  const textMuted = isLightTheme ? 'text-slate-600' : 'text-white/60';
+  const bgActive = isLightTheme ? 'bg-slate-800/10' : 'bg-white/20';
+  const bgHover = isLightTheme ? 'hover:bg-slate-800/5' : 'hover:bg-white/10';
+  const borderColor = isLightTheme ? 'border-slate-300/50' : 'border-white/20';
+  const bgNav = isLightTheme ? 'bg-white/60' : 'bg-white/10';
+
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-xl border-t border-white/20">
+    <nav className={`fixed bottom-0 left-0 right-0 z-50 ${bgNav} backdrop-blur-xl border-t ${borderColor}`}>
       <div className="max-w-lg mx-auto px-2">
         <ul className="flex justify-around items-center h-16">
           {navItems.map((item) => {
-            // desabilita algumas paginas se nao tiver dados
+            // desativa algumas páginas se não houver dados
             const disabled = !hasData && (item.to === '/forecast' || item.to === '/hourly');
             
             return (
@@ -32,8 +43,8 @@ export function BottomNav() {
                     ${disabled 
                       ? 'opacity-30 cursor-not-allowed' 
                       : isActive 
-                        ? 'text-white bg-white/20' 
-                        : 'text-white/60 hover:text-white hover:bg-white/10'
+                        ? `${textColor} ${bgActive}` 
+                        : `${textMuted} hover:${textColor} ${bgHover}`
                     }
                   `}
                 >

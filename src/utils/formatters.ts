@@ -1,6 +1,6 @@
 import type { TemperatureUnit } from '@/store';
 
-// converte temperatura baseado na unidade
+// converte a temperatura conforme a unidade
 export function formatTemperature(celsius: number, unit: TemperatureUnit): string {
   if (unit === 'fahrenheit') {
     const fahrenheit = (celsius * 9/5) + 32;
@@ -9,7 +9,7 @@ export function formatTemperature(celsius: number, unit: TemperatureUnit): strin
   return `${Math.round(celsius)}°C`;
 }
 
-// formata velocidade do vento
+// formata a velocidade do vento
 export function formatWindSpeed(kph: number, unit: TemperatureUnit): string {
   if (unit === 'fahrenheit') {
     const mph = kph * 0.621371;
@@ -18,62 +18,62 @@ export function formatWindSpeed(kph: number, unit: TemperatureUnit): string {
   return `${Math.round(kph)} km/h`;
 }
 
-// formata data
+// formata a data
 export function formatDate(dateString: string, language: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', {
+  return date.toLocaleDateString(language === 'pt' ? 'pt-PT' : 'en-US', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
   });
 }
 
-// formata hora
+// formata a hora
 export function formatTime(dateString: string, language: string): string {
   const date = new Date(dateString);
-  return date.toLocaleTimeString(language === 'pt' ? 'pt-BR' : 'en-US', {
+  return date.toLocaleTimeString(language === 'pt' ? 'pt-PT' : 'en-US', {
     hour: '2-digit',
     minute: '2-digit',
   });
 }
 
-// formata hora simples (so hora)
+// formata a hora simples (só a hora)
 export function formatHour(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleTimeString('pt-BR', {
+  return date.toLocaleTimeString('pt-PT', {
     hour: '2-digit',
     minute: '2-digit',
   });
 }
 
-// pega o dia da semana abreviado
+// obtém o dia da semana abreviado
 export function getWeekday(dateString: string, language: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', {
+  return date.toLocaleDateString(language === 'pt' ? 'pt-PT' : 'en-US', {
     weekday: 'short',
   });
 }
 
-// verifica se eh hoje
+// verifica se é hoje
 export function isToday(dateString: string): boolean {
   const date = new Date(dateString);
   const today = new Date();
   return date.toDateString() === today.toDateString();
 }
 
-// gera id unico
+// gera um id único
 export function generateId(): string {
   return Math.random().toString(36).substring(2, 9);
 }
 
-// pega icone do tempo
+// obtém o ícone do tempo
 export function getWeatherIcon(iconUrl: string, isDay: number): string {
   const iconCode = iconUrl.split('/').pop();
   const period = isDay ? 'day' : 'night';
   return `https://cdn.weatherapi.com/weather/128x128/${period}/${iconCode}`;
 }
 
-// pega cor baseada na temperatura
+// obtém a cor conforme a temperatura
 export function getTemperatureColor(temp: number): string {
   if (temp >= 35) return 'text-red-500';
   if (temp >= 30) return 'text-orange-500';
@@ -85,8 +85,35 @@ export function getTemperatureColor(temp: number): string {
   return 'text-blue-600';
 }
 
-// pega gradiente baseado na temperatura e hora
-export function getBackgroundGradient(temp: number | null, isDay: boolean): string {
+// obtém o gradiente conforme a temperatura, hora e tema
+export function getBackgroundGradient(
+  temp: number | null, 
+  isDay: boolean, 
+  theme: 'light' | 'dark' | 'auto' = 'auto'
+): string {
+  // tema escuro forçado
+  if (theme === 'dark') {
+    if (temp === null) return 'from-slate-900 via-slate-950 to-black';
+    if (temp >= 30) return 'from-slate-900 via-red-950 to-slate-950';
+    if (temp >= 20) return 'from-slate-900 via-indigo-950 to-slate-950';
+    if (temp >= 10) return 'from-slate-900 via-blue-950 to-slate-950';
+    return 'from-slate-900 via-cyan-950 to-slate-950';
+  }
+  
+  // tema claro forçado
+  if (theme === 'light') {
+    if (temp === null) return 'from-sky-200 via-blue-200 to-indigo-200';
+    if (temp >= 35) return 'from-orange-200 via-amber-100 to-yellow-100';
+    if (temp >= 30) return 'from-amber-200 via-yellow-100 to-orange-100';
+    if (temp >= 25) return 'from-yellow-100 via-amber-100 to-rose-100';
+    if (temp >= 20) return 'from-sky-200 via-blue-100 to-indigo-100';
+    if (temp >= 15) return 'from-blue-200 via-sky-100 to-cyan-100';
+    if (temp >= 10) return 'from-blue-300 via-blue-200 to-indigo-200';
+    if (temp >= 5) return 'from-blue-300 via-indigo-200 to-purple-200';
+    return 'from-blue-400 via-indigo-300 to-slate-300';
+  }
+  
+  // tema automático - usa dia/noite
   if (temp === null) {
     return 'from-slate-800 via-slate-900 to-slate-950';
   }
@@ -106,10 +133,10 @@ export function getBackgroundGradient(temp: number | null, isDay: boolean): stri
   return 'from-blue-700 via-indigo-700 to-slate-800';
 }
 
-// pega descricao da qualidade do ar
+// obtém a descrição da qualidade do ar
 export function getAqiDescription(aqi: number, language: string): { text: string; color: string } {
   const descriptions = {
-    pt: ['Boa', 'Moderada', 'Ruim para sensíveis', 'Ruim', 'Muito ruim', 'Perigosa'],
+    pt: ['Boa', 'Moderada', 'Má para sensíveis', 'Má', 'Muito má', 'Perigosa'],
     en: ['Good', 'Moderate', 'Unhealthy for sensitive', 'Unhealthy', 'Very unhealthy', 'Hazardous'],
   };
   const colors = ['text-green-500', 'text-yellow-500', 'text-orange-500', 'text-red-500', 'text-purple-500', 'text-rose-900'];
@@ -123,7 +150,7 @@ export function getAqiDescription(aqi: number, language: string): { text: string
   };
 }
 
-// pega fase da lua traduzida
+// obtém a fase da lua traduzida
 export function getMoonPhase(phase: string, language: string): string {
   const phases: Record<string, { pt: string; en: string }> = {
     'New Moon': { pt: 'Lua Nova', en: 'New Moon' },

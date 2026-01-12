@@ -53,7 +53,7 @@ export function useGeolocation(): UseGeolocationReturn {
             errorMessage = 'localizacao indisponivel';
             break;
           case error.TIMEOUT:
-            errorMessage = 'tempo esgotado ao buscar localizacao';
+            errorMessage = 'tempo esgotado ao obter localizacao';
             break;
         }
         

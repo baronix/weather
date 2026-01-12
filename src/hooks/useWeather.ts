@@ -28,7 +28,7 @@ export function useWeather() {
     setError(null);
 
     try {
-      // busca previsao de 7 dias com aqi e alertas
+      // vai buscar previsão de 7 dias com aqi e alertas
       const lang = language === 'pt' ? 'pt' : 'en';
       const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(query)}&days=7&aqi=yes&alerts=yes&lang=${lang}`;
       
@@ -36,7 +36,7 @@ export function useWeather() {
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error?.message || 'falha ao buscar dados do tempo');
+        throw new Error(errorData.error?.message || 'falha ao obter dados do tempo');
       }
 
       const data: WeatherData = await response.json();
