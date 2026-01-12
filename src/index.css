@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* esconde a scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* esconde o placeholder quando foca no input */
+input:focus::placeholder {
+  color: transparent;
+}
+
+/* animacoes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+/* fonte padrao */
+html {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* outline melhor pra acessibilidade */
+*:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
