@@ -112,11 +112,43 @@ export interface HourlyWeather {
   uv: number;
 }
 
+export interface AirQuality {
+  co: number;
+  no2: number;
+  o3: number;
+  so2: number;
+  pm2_5: number;
+  pm10: number;
+  'us-epa-index': number;
+  'gb-defra-index': number;
+}
+
+export interface Alert {
+  headline: string;
+  msgtype: string;
+  severity: string;
+  urgency: string;
+  areas: string;
+  category: string;
+  certainty: string;
+  event: string;
+  note: string;
+  effective: string;
+  expires: string;
+  desc: string;
+  instruction: string;
+}
+
 export interface WeatherData {
   location: WeatherLocation;
-  current: CurrentWeather;
+  current: CurrentWeather & {
+    air_quality?: AirQuality;
+  };
   forecast?: {
     forecastday: ForecastDay[];
+  };
+  alerts?: {
+    alert: Alert[];
   };
 }
 

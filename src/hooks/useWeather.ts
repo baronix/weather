@@ -1,22 +1,25 @@
-import { useState, useCallback } from 'react';
-import type { WeatherData, WeatherError } from '@/types';
+import { useCallback } from 'react';
+import { useWeatherStore } from '@/store';
+import type { WeatherData } from '@/types';
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
-interface UseWeatherReturn {
-  weather: WeatherData | null;
-  loading: boolean;
-  error: WeatherError | null;
-  searchLocation: (location: string) => Promise<void>;
-  searchByCoords: (lat: number, lon: number) => Promise<void>;
-  clearError: () => void;
-}
-
-export function useWeather(): UseWeatherReturn {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<WeatherError | null>(null);
+export function useWeather() {
+  const {
+    weather,
+    loading,
+    error,
+    lastUpdated,
+    currentLocation,
+    unit,
+    language,
+    setWeather,
+    setLoading,
+    setError,
+    setCurrentLocation,
+    clearWeather,
+  } = useWeatherStore();
 
   const fetchWeather = useCallback(async (query: string) => {
     if (!query.trim()) return;
@@ -25,33 +28,27 @@ export function useWeather(): UseWeatherReturn {
     setError(null);
 
     try {
-      const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(query)}&days=5&aqi=no&lang=pt`;
+      // busca previsao de 7 dias com aqi e alertas
+      const lang = language === 'pt' ? 'pt' : 'en';
+      const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(query)}&days=7&aqi=yes&alerts=yes&lang=${lang}`;
+      
       const response = await fetch(url);
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw {
-          code: errorData.error?.code || response.status,
-          message: errorData.error?.message || 'falha ao buscar dados do tempo',
-        };
+        throw new Error(errorData.error?.message || 'falha ao buscar dados do tempo');
       }
 
       const data: WeatherData = await response.json();
       setWeather(data);
+      setCurrentLocation(query);
     } catch (err) {
-      if (err && typeof err === 'object' && 'code' in err && 'message' in err) {
-        setError(err as WeatherError);
-      } else {
-        setError({
-          code: 0,
-          message: 'erro inesperado. tenta de novo.',
-        });
-      }
-      setWeather(null);
+      const message = err instanceof Error ? err.message : 'erro inesperado. tenta de novo.';
+      setError(message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [language, setWeather, setLoading, setError, setCurrentLocation]);
 
   const searchLocation = useCallback(async (location: string) => {
     await fetchWeather(location);
@@ -61,16 +58,22 @@ export function useWeather(): UseWeatherReturn {
     await fetchWeather(`${lat},${lon}`);
   }, [fetchWeather]);
 
-  const clearError = useCallback(() => {
-    setError(null);
-  }, []);
+  const refresh = useCallback(async () => {
+    if (currentLocation) {
+      await fetchWeather(currentLocation);
+    }
+  }, [currentLocation, fetchWeather]);
 
   return {
     weather,
     loading,
     error,
+    lastUpdated,
+    currentLocation,
+    unit,
     searchLocation,
     searchByCoords,
-    clearError,
+    refresh,
+    clearWeather,
   };
 }

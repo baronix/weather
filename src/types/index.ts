@@ -5,5 +5,7 @@ export type {
   WeatherCondition,
   ForecastDay,
   HourlyWeather,
-  WeatherError 
+  WeatherError,
+  AirQuality,
+  Alert,
 } from './weather';
